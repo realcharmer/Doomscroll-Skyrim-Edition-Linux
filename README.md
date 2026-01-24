@@ -28,8 +28,6 @@
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/reinesana/doomscrolling-skyrim-edition.git
-
-cd doomscrolling-skyrim-edition
 ```
 
 ### 2. Install dependencies
