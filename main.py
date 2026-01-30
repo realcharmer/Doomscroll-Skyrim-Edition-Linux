@@ -1,3 +1,4 @@
+import argparse
 import cv2
 import time
 import subprocess
@@ -70,11 +71,7 @@ def draw_warning(frame, text="lock in twin"):
 
 
 # Main
-def main():
-    timer = 2.0
-    looking_down_threshold = 0.25
-    debounce_threshold = 0.45
-
+def main(timer, looking_threshold, debounce_threshold):
     skyrim_video = Path("./assets/skyrim-skeleton.mp4").resolve()
     model_file = Path("./assets/face_landmarker_full.task").resolve()
 
@@ -144,7 +141,7 @@ def main():
             if video_playing:
                 is_looking_down = avg_ratio < debounce_threshold
             else:
-                is_looking_down = avg_ratio < looking_down_threshold
+                is_looking_down = avg_ratio < looking_threshold
 
             if is_looking_down:
                 if doomscroll is None:
@@ -179,4 +176,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Doomscrolling alarm with MediaPipe.")
+    parser.add_argument("--timer", type=float, default=2.0, help="Seconds before video plays when looking down")
+    parser.add_argument("--looking_threshold", type=float, default=0.25, help="Threshold for initial look-down detection")
+    parser.add_argument("--debounce_threshold", type=float, default=0.45, help="Threshold for continuing look-down detection when video is playing")
+
+    args = parser.parse_args()
+    main(args.timer, args.looking_threshold, args.debounce_threshold)

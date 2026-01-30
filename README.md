@@ -50,40 +50,32 @@ pip install -r requirements.txt
 ```
 
 ### 3. Run the program
+
 ```bash
 python main.py
 ```
 
-## Configuration
+## Configuration options
 
-You can customize how the system behaves by editing the configuration values in `main.py`.
+The following configuration options can be passed during execution.
 
-### `timer`
+### `--timer`
+
 The minimum amount of time the user must be “looking down” before triggering the program. This acts as a grace period.
+
 - Lower value: triggers faster
 - Higher value: longer grace period before triggering
 
-```python
-timer = 2.0
-```
+### `--looking_threshold`
 
-### `looking_down_threshold`
 The minimum iris position required to consider the user as looking down.
+
 - Lower value: more strict and requires stronger downward gaze
 - Higher value: more sensitive
 
-Adjust `looking_down_threshold` to control the sensitivity of iris detection.
-```python
-looking_down_threshold = 0.25
+### `--debounce_threshold`
 
-```
-
-### `debounce_threshold`
 The minimum threshold required for the system to exit the “looking down” state before the program resets.
+
 - Lower value: video stops more easily (more strict while playing)
 - Higher value: video stays on longer (more forgiving while playing)
-
-Adjust `debounce_threshold` to control how much upward eye movement is required before the program resets.
-```python
-debounce_threshold = 0.45
-```
