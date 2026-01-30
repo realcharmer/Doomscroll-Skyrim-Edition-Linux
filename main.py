@@ -177,9 +177,9 @@ def main(timer, looking_threshold, debounce_threshold):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Doomscrolling alarm with MediaPipe.")
-    parser.add_argument("--timer", type=float, default=2.0, help="Seconds before video plays when looking down")
-    parser.add_argument("--looking_threshold", type=float, default=0.25, help="Threshold for initial look-down detection")
-    parser.add_argument("--debounce_threshold", type=float, default=0.45, help="Threshold for continuing look-down detection when video is playing")
+    parser.add_argument("--timer", type=float, default=2.0, help="Seconds before video plays when looking down (default: 2.0)")
+    parser.add_argument("--looking_threshold", type=float, default=0.25, help="Threshold for initial look-down detection (default: 0.25)")
+    parser.add_argument("--debounce_threshold", type=float, default=0.45, help="Threshold for continuing look-down detection when video is playing (default: 0.45)")
 
     args = parser.parse_args()
     main(args.timer, args.looking_threshold, args.debounce_threshold)
