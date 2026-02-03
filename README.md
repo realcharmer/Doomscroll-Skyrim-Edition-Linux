@@ -78,8 +78,12 @@ The minimum threshold required for the system to exit the “looking down” sta
 - Lower value: video stops more easily (more strict while playing)
 - Higher value: video stays on longer (more forgiving while playing)
 
+### `--fullscreen`
+
+Launch mpv in fullscreen mode.
+
 ## Usage Example
 
 ```
-python main.py --timer 2.0 --looking_threshold 0.25 --debounce_threshold 0.45
+python main.py --timer 2.0 --looking_threshold 0.25 --debounce_threshold 0.45 --fullscreen
 ```

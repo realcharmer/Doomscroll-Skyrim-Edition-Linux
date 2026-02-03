@@ -17,22 +17,29 @@ ImageFormat = mp.ImageFormat
 
 # Video player (mpv)
 class LinuxVideoPlayer:
-    def __init__(self):
+    def __init__(self, fullscreen=False):
         self.process = None
+        self.fullscreen = fullscreen
 
     def play(self, video_path: Path) -> None:
         if self.process is not None:
             return
 
+        cmd = [
+            "mpv",
+            "--ontop",
+            "--no-border",
+            "--geometry=360x780+25+45",
+            "--loop",
+        ]
+
+        if self.fullscreen:
+            cmd.append("--fs")
+
+        cmd.append(str(video_path)),
+
         self.process = subprocess.Popen(
-            [
-                "mpv",
-                "--ontop",
-                "--no-border",
-                "--geometry=360x780+25+45",
-                "--loop",
-                str(video_path),
-            ],
+            cmd,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )
@@ -79,7 +86,7 @@ def main(timer, looking_threshold, debounce_threshold):
         print("Missing skyrim-skeleton.mp4 or face_landmarker_full.task in ./assets/")
         return
 
-    video_player = LinuxVideoPlayer()
+    video_player = LinuxVideoPlayer(fullscreen=args.fullscreen)
 
     # Initialize FaceLandmarker
     options = FaceLandmarkerOptions(
@@ -180,6 +187,7 @@ if __name__ == "__main__":
     parser.add_argument("--timer", type=float, default=2.0, help="Seconds before video plays when looking down (default: 2.0)")
     parser.add_argument("--looking_threshold", type=float, default=0.25, help="Threshold for initial look-down detection (default: 0.25)")
     parser.add_argument("--debounce_threshold", type=float, default=0.45, help="Threshold for continuing look-down detection when video is playing (default: 0.45)")
+    parser.add_argument("--fullscreen", action="store_true", help="Start the video in fullscreen mode")
 
     args = parser.parse_args()
     main(args.timer, args.looking_threshold, args.debounce_threshold)
